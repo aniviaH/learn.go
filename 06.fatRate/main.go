@@ -3,13 +3,30 @@ package main
 import "fmt"
 
 func main() {
-	var weight float64 = 52.0
-	var height float64 = 1.57
+
+	var name string
+	fmt.Print("姓名：")
+	fmt.Scanln(&name)
+
+	var weight float64
+	fmt.Print("体重（kg）：")
+	fmt.Scanln(&weight)
+
+	var height float64
+	fmt.Print("身高（米）：")
+	fmt.Scanln(&height)
+
 	var bmi float64 = weight / (height * height)
 
-	var age = 28
+	var age int
+	fmt.Print("年龄：")
+	fmt.Scanln(&age)
+
 	var sexRate int
-	var sex string = "男"
+	var sex string
+	fmt.Print("性别（男/女）：")
+	fmt.Scanln(&sex)
+
 	if sex == "男" {
 		sexRate = 1
 	} else {
