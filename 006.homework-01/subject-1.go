@@ -9,8 +9,7 @@ import "fmt"
 func main() {
 	fmt.Println("作业01-1：计算多个人的平均体脂，连续输入多人的体脂计算信息，最后输出所有人的平均体脂")
 
-	//const UserCount int = 3
-	const UserCount int = 1
+	const UserCount int = 3
 	fmt.Printf("请输入%d位用户信息：\n", UserCount)
 
 	var names = [UserCount]string{}
