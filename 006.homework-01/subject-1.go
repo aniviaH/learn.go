@@ -9,7 +9,8 @@ import "fmt"
 func main() {
 	fmt.Println("作业01-1：计算多个人的平均体脂，连续输入多人的体脂计算信息，最后输出所有人的平均体脂")
 
-	const UserCount int = 3
+	//const UserCount int = 3
+	const UserCount int = 1
 	fmt.Printf("请输入%d位用户信息：\n", UserCount)
 
 	var names = [UserCount]string{}
@@ -26,36 +27,19 @@ func main() {
 	for i := 0; i < UserCount; i++ {
 		fmt.Printf("第%d位用户===>>>\n", i+1)
 
-		var name string
-		fmt.Print("姓名：")
-		fmt.Scanln(&name)
+		name, weight, height, age, sex := getFromInput()
 
-		var weight float64
-		fmt.Print("体重（kg）：")
-		fmt.Scanln(&weight)
+		bmi := calcBMI(height, weight)
 
-		var height float64
-		fmt.Print("身高（米）：")
-		fmt.Scanln(&height)
-
-		var bmi float64 = weight / (height * height)
-
-		var sexRate int
-		var sex string
-		fmt.Print("性别（男/女）：")
-		fmt.Scanln(&sex)
+		var fatRate float64
+		var maleFatRate = (1.2*bmi + 0.23*float64(age) - 5.4 - 10.8*float64(1)) / 100
+		var femaleFatRate = (1.2*bmi + 0.23*float64(age) - 5.4 - 10.8*float64(0)) / 100
 
 		if sex == "男" {
-			sexRate = 1
+			fatRate = maleFatRate
 		} else {
-			sexRate = 0
+			fatRate = femaleFatRate
 		}
-
-		var age int
-		fmt.Print("年龄：")
-		fmt.Scanln(&age)
-
-		var fatRate = (1.2*bmi + 0.23*float64(age) - 5.4 - 10.8*float64(sexRate)) / 100
 
 		var suggestion string
 
@@ -197,4 +181,27 @@ func main() {
 	//fmt.Println("用户：", names)
 	//fmt.Println("体脂：", fateRates)
 	fmt.Println(UserCount, "位用户平均体脂：", fateRateAverage)
+}
+
+func getFromInput() (name string, weight float64, height float64, age int, sex string) {
+	fmt.Print("姓名：")
+	fmt.Scanln(&name)
+
+	fmt.Print("体重（kg）：")
+	fmt.Scanln(&weight)
+
+	fmt.Print("身高（米）：")
+	fmt.Scanln(&height)
+
+	fmt.Print("年龄：")
+	fmt.Scanln(&age)
+
+	fmt.Print("性别（男/女）：")
+	fmt.Scanln(&sex)
+
+	return
+}
+
+func calcBMI(height float64, weight float64) float64 {
+	return weight / (height * height)
 }
