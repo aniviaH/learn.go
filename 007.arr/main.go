@@ -28,11 +28,11 @@ func main() {
 	//a[-1] = 0 // 编译错误，越界
 	//a[4] = 4 // 编译错误，越界
 
-	fmt.Println("遍历======for")
+	fmt.Println("遍历-------for")
 	for i := 0; i < len(a); i++ {
 		fmt.Println(a[i])
 	}
-	fmt.Println("遍历======for range")
+	fmt.Println("遍历-------for range")
 	for i := range a {
 		fmt.Println(a[i])
 	}
@@ -44,4 +44,7 @@ func main() {
 		// 不想用第一个下标值时
 		fmt.Println("val = ", val)
 	}
+
+	//var num *int
+	//*num++
 }
