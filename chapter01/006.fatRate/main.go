@@ -16,7 +16,7 @@ func main() {
 		fmt.Print("身高（米）：")
 		fmt.Scanln(&height)
 
-		var bmi float64 = weight / (height * height)
+		var bmi = weight / (height * height)
 
 		var age int
 		fmt.Print("年龄：")

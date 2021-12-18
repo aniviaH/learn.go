@@ -6,6 +6,9 @@ import (
 
 func main() {
 	//starttime := time.Now()
+
+	//defer fmt.Println("defer end:", time.Now().Sub(starttime))
+	
 	//defer func() {
 	//	fmt.Println("defer end:", time.Now().Sub(starttime))
 	//}()
