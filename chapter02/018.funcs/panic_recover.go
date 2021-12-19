@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"runtime/debug"
 )
 
 func panicAndRecover() {
+	fmt.Println("main.go中的全局变量tall, weight: ", tall, weight)
+
 	defer coverPanic()
 	defer coverPanicUpgraded() // 这样是能抓住严重错误的
 	//defer func() { // 抓不住严重错误
@@ -27,6 +28,6 @@ func coverPanic() { // 未能抓住panic
 func coverPanicUpgraded() {
 	if r := recover(); r != nil {
 		fmt.Println("系统出了严重故障：", r)
-		debug.PrintStack()
+		//debug.PrintStack()
 	}
 }

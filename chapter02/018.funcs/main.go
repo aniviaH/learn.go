@@ -9,6 +9,8 @@ var tall float64
 var weight float64
 
 func main() {
+	//fmt.newPrinter()
+
 	panicAndRecover()
 
 	deferGuess()

@@ -1,6 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	_ "testing/quick"
+	//_ "learn.go/chapter02/015.fatRate.refactor/calc" // 不需要被调用，但它是项目的需要
+	c01 "learn.go/chapter02/015.fatRate.refactor/calc" // 引用包并起别名
+	c02 "learn.go/chapter02/015.fatRate.refactor/calc_upgraded"
+	//. "learn.go/chapter02/015.fatRate.refactor/calc" // 扩展当前包
+)
 
 /*
 init 函数
@@ -47,7 +54,11 @@ func calcFatRateBody() {
 	weight, height, age, sexRate, sex := getMaterialsFromInput()
 
 	// 计算体脂率
-	fatRate := calcFatRate(weight, height, age, sexRate)
+	fatRate := calcFatRate(weight, height, age, sexRate, sex)
+	//bmi := calc.CalcBMI(height, weight)
+	//fatRate := calc.CalcFatRate(bmi, age, sex)
+	//bmi := calcAlia.CalcBMI(height, weight)
+	//fatRate := calcAlia.CalcFatRate(bmi, age, sex)
 
 	if fatRate < 0 {
 		fmt.Println("输入项有误，请检查重新输入！")
@@ -164,9 +175,11 @@ func getHealthSuggestionForMale(age int, fatRate float64) {
 	}
 }
 
-func calcFatRate(weight float64, height float64, age int, sexRate int) float64 {
-	bmi := weight / (height * height)
-	fatRate := (1.2*bmi + 0.23*float64(age) - 5.4 - 10.8*float64(sexRate)) / 100
+func calcFatRate(weight float64, height float64, age int, sexRate int, sex string) float64 {
+	//bmi := weight / (height * height)
+	bmi := c01.CalcBMI(height, weight)
+	//fatRate := (1.2*bmi + 0.23*float64(age) - 5.4 - 10.8*float64(sexRate)) / 100
+	fatRate := c02.CalcFatRate(bmi, age, sex)
 	fmt.Println("体脂率是：", fatRate)
 	return fatRate
 }
