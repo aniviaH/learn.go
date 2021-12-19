@@ -49,10 +49,10 @@ func calcFatRateBody() {
 	// 计算体脂率
 	fatRate := calcFatRate(weight, height, age, sexRate)
 
-	//if fatRate < 0 {
-	//	fmt.Println("输入项有误，请检查重新输入！")
-	//	continue
-	//}
+	if fatRate < 0 {
+		fmt.Println("输入项有误，请检查重新输入！")
+		panic("fat rate is not allowed to be negative")
+	}
 
 	// 得到健康提示
 	var checkHealthFunc func(age int, fatRate float64)
