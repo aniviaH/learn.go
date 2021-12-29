@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	c02 "learn.go/chapter02/015.fatRate.refactor/calc_upgraded"
 	_ "testing/quick"
 	//_ "learn.go/chapter02/015.fatRate.refactor/calc" // 不需要被调用，但它是项目的需要
-	c01 "learn.go/chapter02/015.fatRate.refactor/calc" // 引用包并起别名
-	c02 "learn.go/chapter02/015.fatRate.refactor/calc_upgraded"
+	c01 "learn.go/chapter02/015.fatRate.refactor/calculator" // 引用包并起别名
 	//. "learn.go/chapter02/015.fatRate.refactor/calc" // 扩展当前包
 )
 
