@@ -1,4 +1,4 @@
-package calc
+package calculator
 
 func CalcFatRate(bmi float64, age int, sex string) (fatRate float64) {
 	var sexRate int
@@ -13,5 +13,8 @@ func CalcFatRate(bmi float64, age int, sex string) (fatRate float64) {
 
 func getAgeWeight(age int) (ageWeight float64) {
 	ageWeight = 0.23
+	if age >= 30 && age <= 60 {
+		ageWeight = 0.22
+	}
 	return
 }
