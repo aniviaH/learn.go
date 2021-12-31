@@ -1,6 +1,9 @@
 package gobmi
 
+import "fmt"
+
 func CalcFatRate(bmi float64, age int, sex string) (fatRate float64) {
+	fmt.Println("CalcFatRate---本地replace+扩展")
 	var sexRate int
 	if sex == "男" {
 		sexRate = 1
