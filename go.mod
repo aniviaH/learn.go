@@ -14,4 +14,4 @@ replace learn.go.tools => ../learn.go.tools
 replace github.com/spf13/cobra => github.com/spf13/cobra v1.2.0
 
 // 本地扩展
-replace github.com/armstrongli/go-bmi => ./learn.go.tools
+replace github.com/armstrongli/go-bmi => ./learn.go.tools/gobmi

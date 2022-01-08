@@ -3,7 +3,7 @@ package gobmi
 import "fmt"
 
 func CalcFatRate(bmi float64, age int, sex string) (fatRate float64, err error) {
-	fmt.Println("CalcFatRate---本地replace+扩展")
+	fmt.Println("CalcFatRate---本地replace+扩展---3")
 
 	if sex != "男" && sex != "女" {
 		err = fmt.Errorf("录入性别请输入男/女")
