@@ -31,14 +31,14 @@ func calcFatRateBody() {
 
 	bmi, err := gobmi.BMI(weight, height)
 	if err != nil {
-		fmt.Println("计算BMI异常")
+		fmt.Println("计算BMI异常", err)
 		return
 	}
 	fatRate, _ := gobmi.CalcFatRate(bmi, age, sex)
 	fmt.Println("体脂率是：", fatRate)
 
 	if fatRate < 0 {
-		fmt.Println("输入项有误，请检查重新输入！")
+		fmt.Println("输入项有误，请检查重新输入！", err)
 		panic("fat rate is not allowed to be negative")
 	}
 
