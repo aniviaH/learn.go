@@ -10,20 +10,29 @@ func TestCase1(t *testing.T) {
 		楼层有5层，所有电梯楼层没有人请求电梯，电梯不动
 	*/
 	{
-		building := &Building{
-			floors: []int{1, 2, 3, 4, 5},
+		// 初始化
+		eleSvc := &ElevatorService{
+			building: &Building{
+				floors:              []int{0, 1, 2, 3, 4},
+				floorsHasPressedBtn: []int{},
+			},
+			elevator: &Elevator{
+				curFloor:     0,
+				curStatus:    elevatorStatusMap["stopped"],
+				direction:    elevatorDirectionMap["stopped"],
+				targetFloors: []int{},
+			},
 		}
-		fmt.Println("楼层：", building)
+		fmt.Println(eleSvc.building)
+		fmt.Println(eleSvc.elevator)
 
-		elevator := &Elevator{
-			curFloor:  1,
-			curStatus: elevatorStatusMap[0],
-		}
+		fmt.Println("电梯当前楼层：", eleSvc.elevator.getCurFloor())
 
-		curStatus := elevator.getCurStatus()
+		curStatus := eleSvc.elevator.getCurStatus()
 		fmt.Println(curStatus)
-		if curStatus != "停止" {
-			t.Fatalf("预期电梯不动， 但得到的是%v", curStatus)
+		wantCurStatus := elevatorStatusMap["stopped"]
+		if curStatus != wantCurStatus {
+			t.Fatalf("预期电梯%v， 但得到的是%v", wantCurStatus, curStatus)
 		}
 	}
 }
