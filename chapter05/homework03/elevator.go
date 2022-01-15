@@ -62,11 +62,9 @@ func (e *Elevator) moveToTargetFloor(target int, step int) {
 		moveOneFloorFunc = e.downOneFloor
 	}
 
-	fmt.Printf("电梯向%v楼，方向：%v\n", target+1, d)
+	fmt.Printf("电梯向%v楼行进，方向：%v\n", target+1, d)
 	for i := 0; i < step; i++ {
 		moveOneFloorFunc(target)
-
-		e.checkIsArrivedOneTargetFloor(target)
 	}
 }
 
@@ -78,21 +76,30 @@ func (e *Elevator) upOneFloor(target int) {
 
 	e.openDoor()
 	e.closeDoor()
+
+	e.checkIsArrivedOneTargetFloor(target)
+	//e.move()
 }
 func (e *Elevator) downOneFloor(target int) {
-	fmt.Println("上升一楼")
+	fmt.Println("下降一楼")
 	time.Sleep(1 * time.Second)
 
 	e.curFloor--
 
 	e.openDoor()
 	e.closeDoor()
+
+	e.checkIsArrivedOneTargetFloor(target)
+	//e.move()
 }
 
 func (e *Elevator) checkIsArrivedOneTargetFloor(target int) {
+	fmt.Println("checkIsArrivedOneTargetFloor---", target, e.curFloor)
 	if e.curFloor == target {
 		// 到达一个目标楼层，移除
-		e.targetFloors = append([]int{}, e.targetFloors[0:]...)
+		e.targetFloors = append([]int{}, e.targetFloors[1:]...)
+
+		e.move()
 	}
 }
 
