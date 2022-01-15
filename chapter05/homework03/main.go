@@ -13,6 +13,11 @@ var (
 		"up":      "up",
 		"down":    "down",
 	}
+	elevatorDirectionTextMap = map[string]string{
+		"stopped": "停止",
+		"up":      "上升",
+		"down":    "下降",
+	}
 )
 
 func main() {

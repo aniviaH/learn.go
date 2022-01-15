@@ -7,7 +7,7 @@ import (
 
 func TestCase4(t *testing.T) {
 	/*
-		楼层有5层，所有电梯楼层没有人请求电梯，电梯不动
+		楼层有5层，电梯在3层。上来一些人后，目标楼层： 4楼、5楼、2楼。电梯先向上到4楼，然后到5楼，之后转头到2楼，最后停在2楼。
 	*/
 	{
 		// 初始化
@@ -17,7 +17,7 @@ func TestCase4(t *testing.T) {
 				floorsHasPressedBtn: []int{},
 			},
 			elevator: &Elevator{
-				curFloor:     0,
+				curFloor:     2,
 				curStatus:    elevatorStatusMap["stopped"],
 				direction:    elevatorDirectionMap["stopped"],
 				targetFloors: []int{},
@@ -26,12 +26,24 @@ func TestCase4(t *testing.T) {
 		fmt.Println(eleSvc.building)
 		fmt.Println(eleSvc.elevator)
 
-		fmt.Println("电梯当前楼层：", eleSvc.elevator.getCurFloor())
+		// 操作开始
+		floorOfPressBtn1 := 4
+		indexFloorOfPressBtn1 := floorOfPressBtn1 - 1
+		eleSvc.building.pressBtn(indexFloorOfPressBtn1)
+		floorOfPressBtn2 := 5
+		indexFloorOfPressBtn2 := floorOfPressBtn2 - 1
+		eleSvc.building.pressBtn(indexFloorOfPressBtn2)
+		floorOfPressBtn3 := 2
+		indexFloorOfPressBtn3 := floorOfPressBtn3 - 1
+		eleSvc.building.pressBtn(indexFloorOfPressBtn3)
 
-		curStatus := eleSvc.elevator.getCurStatus()
-		fmt.Println(curStatus)
-		if curStatus != elevatorStatusMap["stopped"] {
-			t.Fatalf("预期电梯不动， 但得到的是%v", curStatus)
+		eleSvc.elevator.start(eleSvc.building)
+
+		curFloor := eleSvc.elevator.getCurFloor()
+		wantCurFloor := 2
+		wantCurFloorIndex := wantCurFloor - 1
+		if curFloor != wantCurFloorIndex {
+			t.Fatalf("预期电梯停在%v楼， 但停在%v楼", wantCurFloorIndex+1, curFloor+1)
 		}
 	}
 }
