@@ -3,37 +3,39 @@ package main
 import "fmt"
 
 var (
-	elevatorStatusMap = map[int]string{
-		//0: "stoped",
-		//1: "paused",
-		//2: "uping",
-		//3: "downing",
-		0: "停止",
-		1: "暂停",
-		2: "上升中",
-		3: "下降中",
+	elevatorStatusMap = map[string]string{
+		"stopped": "stopped",
+		"running": "running",
 	}
 
-	elevatorDirectionMap = map[string]int{
-		"stop": 0,
-		"up":   1,
-		"down": 2,
+	elevatorDirectionMap = map[string]string{
+		"stopped": "stopped",
+		"up":      "up",
+		"down":    "down",
+	}
+	elevatorDirectionTextMap = map[string]string{
+		"stopped": "停止",
+		"up":      "上升",
+		"down":    "下降",
 	}
 )
 
 func main() {
 	// 初始化
-	building := &Building{
-		floors: []int{1, 2, 3, 4, 5},
+	eleSvc := &ElevatorService{
+		building: &Building{
+			floors:              []int{0, 1, 2, 3, 4},
+			floorsHasPressedBtn: []int{},
+		},
+		elevator: &Elevator{
+			curFloor:     0,
+			curStatus:    elevatorStatusMap["stopped"],
+			direction:    elevatorDirectionMap["stopped"],
+			targetFloors: []int{},
+		},
 	}
-	elevator := &Elevator{
-		curFloor:  1,
-		curStatus: elevatorStatusMap[1],
-	}
+	fmt.Println(eleSvc.building)
+	fmt.Println(eleSvc.elevator)
 
-	fmt.Println(*building)
-	fmt.Println(*elevator)
-
-	fmt.Println("电梯当前楼层：", elevator.getCurFloor())
-	// 获取初始化之后的状态
+	fmt.Println("电梯当前楼层：", eleSvc.elevator.getCurFloor())
 }

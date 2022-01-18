@@ -33,7 +33,7 @@ func calcFatRateBody() (error error) {
 
 	bmi, err := gobmi.BMI(weight, height)
 	if err != nil {
-		fmt.Println("计算BMI异常---")
+		fmt.Println("计算BMI异常---", err)
 		return err
 	}
 	fatRate, err := gobmi.CalcFatRate(bmi, age, sex)

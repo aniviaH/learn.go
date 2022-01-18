@@ -3,7 +3,7 @@ package gobmi
 import "fmt"
 
 func BMI(weightKG, heightM float64) (bmi float64, err error) {
-	fmt.Println("BMI---本地replace+扩展---2")
+	fmt.Println("staging---g0-bmi-----v-2--BMI")
 	if weightKG < 0 {
 		err = fmt.Errorf("weight cannot be negative")
 		return
