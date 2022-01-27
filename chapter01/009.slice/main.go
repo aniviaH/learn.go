@@ -39,4 +39,23 @@ func main() {
 	fmt.Println(a, backup) // 因为backup的访问和a是相同访问的引用数据，指向同一片内存地址
 	e := append(a, backup...)
 	fmt.Println(e)
+
+	//
+	fmt.Println("删除索引 2 处的元素-->>")
+	arr := []int{1, 2, 3, 4, 5}
+	fmt.Println(arr)
+	index := 2
+	//arr = append(arr[:index], arr[index+1:]...)
+	arr = removeSliceItemAtIndex(arr, index)
+	fmt.Println(arr)
+
+	// 复制
+	arr2 := make([]int, 4)
+	copy(arr2, arr[1:])
+	fmt.Println(arr2)
+}
+
+func removeSliceItemAtIndex(s []int, index int) []int {
+	s = append(s[:index], s[index+1:]...)
+	return s
 }
