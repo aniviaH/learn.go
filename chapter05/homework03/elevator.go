@@ -70,6 +70,9 @@ func (e *Elevator) moveToTargetFloor(target int, step int) {
 
 func (e *Elevator) upOneFloor(target int) {
 	fmt.Println("上升一楼")
+
+	// todo 这里可以中途按钮的场景
+
 	time.Sleep(1 * time.Second)
 
 	e.curFloor++
@@ -97,11 +100,13 @@ func (e *Elevator) downOneFloor(target int) {
 
 func (e *Elevator) checkIsArrivedOneTargetFloor(target int) {
 	if e.curFloor == target {
-		// 到达一个目标楼层，移除
+		// 到达一个目标楼层，移除第一个目标层
 		e.targetFloors = append([]int{}, e.targetFloors[1:]...)
 
 		e.move()
 	}
+
+	// todo 中途按的按钮，放在数组后面，到达楼层后需要需要进行判断，将其移除
 }
 
 func (e *Elevator) openDoor() {

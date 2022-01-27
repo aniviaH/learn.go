@@ -40,7 +40,6 @@ func TestElevator_getCurFloor(t *testing.T) {
 		fields       fields
 		wantCurFloor int
 	}{
-		// TODO: Add test cases.
 		{name: "test-1", fields: fields{ele: &Elevator{curFloor: 1}}, wantCurFloor: 1},
 		{name: "test-2", fields: fields{ele: &Elevator{curFloor: 2}}, wantCurFloor: 2},
 		{name: "test-3", fields: fields{ele: &Elevator{curFloor: 3}}, wantCurFloor: 3},
