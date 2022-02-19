@@ -40,15 +40,50 @@ func initGlobalRankStandardByOnce(standard []string, i int) {
 	})
 }
 
+var facStore = &dbFactoryStore{}
+
+type dbFactoryStore struct {
+	store map[string]DBFactory
+}
+
+type Conn struct {
+}
+type DBFactory interface {
+	GetConnection() *Conn
+}
+
+func initMySqlFac(connStr string) DBFactory {
+	return &MySqlDBFactory{}
+}
+
+type MySqlDBFactory struct {
+	once sync.Once
+}
+
+func (MySqlDBFactory) GetConnection() *Conn {
+	once.Do(func() {
+		initMySqlFac("")
+	})
+	// todo
+	return nil
+}
+
 func main() {
-	standard := []string{"asia"}
-	for i := 0; i < 10; i++ {
-		go func(i int) {
-			//initGlobalRankStandard(standard, i)
-			initGlobalRankStandardByOnce(standard, i)
-		}(i)
+	{
+		standard := []string{"asia"}
+		for i := 0; i < 10; i++ {
+			go func(i int) {
+				//initGlobalRankStandard(standard, i)
+				initGlobalRankStandardByOnce(standard, i)
+			}(i)
+		}
+		//time.Sleep(1 * time.Second)
+		fmt.Println(globalRank)
+		fmt.Println(globalRankInitialized)
 	}
-	//time.Sleep(1 * time.Second)
-	fmt.Println(globalRank)
-	fmt.Println(globalRankInitialized)
+
+	{
+		//connStr := "xxxxxxxx"
+
+	}
 }
