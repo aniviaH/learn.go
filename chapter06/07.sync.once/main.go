@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 type rank struct {
@@ -13,6 +12,8 @@ type rank struct {
 var globalRank = &rank{}
 var globalRankInitialized bool = false
 var globalRankInitializedLock sync.Mutex
+
+var once sync.Once
 
 func init() {
 	globalRank.standard = []string{"Asia"}
@@ -31,14 +32,23 @@ func initGlobalRankStandard(standard []string, i int) {
 	globalRankInitialized = true
 }
 
+func initGlobalRankStandardByOnce(standard []string, i int) {
+	fmt.Println("第", i, "位work, 尝试进行初始化--")
+	once.Do(func() {
+		fmt.Println("第", i, "位work, 进行初始化")
+		globalRank.standard = standard
+	})
+}
+
 func main() {
 	standard := []string{"asia"}
 	for i := 0; i < 10; i++ {
 		go func(i int) {
-			initGlobalRankStandard(standard, i)
+			//initGlobalRankStandard(standard, i)
+			initGlobalRankStandardByOnce(standard, i)
 		}(i)
 	}
-	time.Sleep(3 * time.Second)
+	//time.Sleep(1 * time.Second)
 	fmt.Println(globalRank)
 	fmt.Println(globalRankInitialized)
 }
