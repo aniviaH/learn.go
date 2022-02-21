@@ -43,7 +43,7 @@ func main() {
 	for i := 0; i < UserCount; i++ {
 		go func(i int) {
 			for {
-				time.Sleep(2 * time.Second)
+				time.Sleep(3 * time.Second)
 				updateUsers(rank, i)
 			}
 		}(i)
@@ -60,8 +60,9 @@ func main() {
 	}
 
 	//time.Sleep(3 * time.Second)
-	serverWg.Wait()
+	//serverWg.Wait()
 	//RankServiceWithMutex(rank)
+	time.Sleep(4 * time.Second)
 }
 
 func registerRankUsers(rank *Rank, wg *sync.WaitGroup) {
@@ -100,7 +101,7 @@ func getUserData(rank *Rank, name int) {
 	userData := rank.usersMap[name]
 	r := getUserRank(rank, userData, name)
 	//fmt.Println("获取用户：", name, "，体脂: ", userData.Fat)
-	fmt.Println("获取用户：", name, "，排名为: ", r)
+	fmt.Println("获取用户：", name, "，体脂: ", userData.Fat, "，排名为: ", r)
 }
 
 type Users []*User
@@ -143,7 +144,7 @@ func getUserRank(rank *Rank, u *User, name int) (res int) {
 }
 
 func getRandRankBase() int {
-	rand.Seed(time.Now().Unix())
+	rand.Seed(time.Now().UnixNano())
 	base := rand.Intn(10)
 	return base
 }
