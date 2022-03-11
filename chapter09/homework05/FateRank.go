@@ -27,7 +27,7 @@ func (u *User) registerToRank() {
 func (u *User) updateUserInfo() {
 
 }
-func (u *User) getRankList() {
+func (u *User) getMyRank() {
 
 }
 
@@ -37,21 +37,20 @@ type Rank struct {
 	usersList []*User
 }
 
-func (r *Rank) RecieveRegisterOfUser(user *User) {
-	r.usersMap[user.Index] = user
+func (rank *Rank) AcceptRegisterOfUser(user *User) {
+	rank.usersMap[user.Index] = user
 
-	//r.sortUsers()
 	// 每次有人注册或者更新体脂排行榜，更新排行榜的排序列表
-	r.sortUsersByBubble()
-	//r.sortUsersByQuick()
+	//r.sortUsers()
 }
-func (r *Rank) sortUsersByBubble() {
-	for _, v := range r.usersMap {
-		r.usersList = append(r.usersList, v)
-	}
-	r.usersList = sortUsersByBubble(r.usersList)
-}
-func sortUsersByBubble(arr []*User) []*User {
+
+//func (r *Rank) sortUsers() {
+//	for _, v := range r.usersMap {
+//		r.usersList = append(r.usersList, v)
+//	}
+//	r.usersList = sortUsersByBubble(r.usersList)
+//}
+func (rank *Rank) sortUsersByBubbleSort(arr []*User) []*User {
 	//fmt.Println("arr排序前--：")
 	//for _, u := range arr {
 	//	fmt.Printf("%v\t", u.Fat)
@@ -74,20 +73,68 @@ func sortUsersByBubble(arr []*User) []*User {
 
 	return arr
 }
-func (r *Rank) sortUsersByQuick() {
+func (rank *Rank) sortUsersByQuickSort(arr []*User, start int, end int) []*User {
+	//fmt.Println("arr排序前--：")
+	//for _, u := range arr {
+	//	fmt.Printf("%v\t", u.Fat)
+	//}
+	//fmt.Println("")
 
+	pivotIdx := (start + end) / 2
+	pivotV := *arr[pivotIdx]
+	l, r := start, end
+	for l <= r {
+		for (*arr[l]).Fat < pivotV.Fat {
+			l++
+		}
+		for (*arr[r]).Fat > pivotV.Fat {
+			r--
+		}
+		if l >= r {
+			break
+		}
+		arr[l], arr[r] = arr[r], arr[l]
+		l++
+		r--
+	}
+	if l == r {
+		l++
+		r--
+	}
+	if r > start {
+		rank.sortUsersByQuickSort(arr, start, r)
+	}
+	if l < end {
+		rank.sortUsersByQuickSort(arr, l, end)
+	}
+
+	//fmt.Println("")
+	//fmt.Println("arr排序后：")
+	//for _, u := range arr {
+	//	fmt.Printf("%v\t", u.Fat)
+	//}
+	return arr
 }
-func (r *Rank) getRankList() {
-	usersList := []*User{}
-	for _, v := range r.usersMap {
+func (rank *Rank) getRankListByBubbleSort() []*User {
+	fmt.Println("冒泡排序 获取体脂排行榜")
+
+	var usersList []*User
+	for _, v := range rank.usersMap {
 		usersList = append(usersList, v)
 	}
-	usersList = sortUsersByBubble(usersList)
+	usersList = rank.sortUsersByBubbleSort(usersList)
 
-	fmt.Println("排名\t", "姓名\t", "体脂")
-	for i, v := range usersList {
-		fmt.Println(i+1, "\t", v.Name, "\t", v.Fat)
+	return usersList
+}
+func (rank *Rank) getRankListByQuickSort() []*User {
+	fmt.Println("快排 获取体脂排行榜")
+	var usersList []*User
+	for _, v := range rank.usersMap {
+		usersList = append(usersList, v)
 	}
+	usersList = rank.sortUsersByQuickSort(usersList, 0, len(usersList)-1)
+
+	return usersList
 }
 
 const UserCount = 5
@@ -130,7 +177,7 @@ func main() {
 	//go func() {
 	for user := range registerCh {
 		fmt.Println("用户注册完成-姓名:", user.Name, ", 体脂:", user.Fat)
-		rank.RecieveRegisterOfUser(user)
+		rank.AcceptRegisterOfUser(user)
 		registerSucCounter++
 
 		if registerSucCounter == UserCount {
@@ -141,18 +188,21 @@ func main() {
 
 	//time.Sleep(2 * time.Second)
 	fmt.Println("查看rank信息-----")
-	for v, _ := range rank.usersMap {
+	for v := range rank.usersMap {
 		fmt.Printf("用户：%v\n", v)
 	}
 	fmt.Println("")
 
-	// 用户查询体脂排行
-	//go func() {
-	rank.getRankList()
-	//}()
-	for i := 0; i < UserCount; i++ {
-
+	// 通过bubble排序查询排行榜总信息
+	//usersList := rank.getRankListByBubbleSort()
+	// 通过bubble排序查询排行榜总信息
+	usersList := rank.getRankListByQuickSort()
+	// 打印信息
+	fmt.Println("排名\t", "姓名\t", "体脂")
+	for i, v := range usersList {
+		fmt.Println(i+1, "\t", v.Name, "\t", v.Fat)
 	}
+
 }
 
 func getRandFat() int64 {
