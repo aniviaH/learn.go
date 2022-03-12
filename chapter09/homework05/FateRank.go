@@ -2,8 +2,12 @@ package main
 
 import (
 	"crypto/rand"
+	"encoding/json"
 	"fmt"
+	"learn.go/pkg/apis"
+	"log"
 	"math/big"
+	"os"
 	"sync"
 	"time"
 )
@@ -42,6 +46,43 @@ func (rank *Rank) AcceptRegisterOfUser(user *User) {
 
 	// 每次有人注册或者更新体脂排行榜，更新排行榜的排序列表
 	//r.sortUsers()
+}
+func (rank *Rank) saveUserInfoToFile(user *User) {
+
+	usersToSaved := apis.UserInformationToSavedForHomework5{
+		Name: user.Name,
+		Fat:  user.Fat,
+	}
+	data, errMashal := json.Marshal(usersToSaved)
+	if errMashal != nil {
+		fmt.Println("json.Marshal 失败：", errMashal)
+		log.Fatalln(errMashal)
+	}
+
+	fmt.Println("marshal 的结果是（原生）：", data)
+	fmt.Println("marshal 的结果是(string): ", string(data))
+
+	var filePath = "F:\\GOPATH\\src\\learn.go\\chapter09\\homework05\\user-info.txt"
+	writeFile(filePath, data)
+}
+
+func writeFile(filePath string, data []byte) {
+	f, errOpen := os.OpenFile(filePath, os.O_APPEND, 0777)
+	//f, errOpen := os.Create(filePath)
+
+	if errOpen != nil {
+		fmt.Println("打开文件失败：", errOpen)
+		os.Exit(1)
+	}
+	fmt.Println("打开文件成功：", f)
+	defer f.Close()
+
+	//_, errWrite := f.Write([]byte(fmt.Sprintf("用户注册, 姓名：%s, 体脂：%d\n", user.Name, user.Fat)))
+	_, errWrite := f.Write(append(data, '\n'))
+	if errWrite != nil {
+		fmt.Println("写入文件失败：", errWrite)
+		os.Exit(2)
+	}
 }
 
 //func (r *Rank) sortUsers() {
@@ -173,11 +214,13 @@ func main() {
 		}(i)
 	}
 
+	// 排行榜接收用户注册
 	registerSucCounter := 0
 	//go func() {
 	for user := range registerCh {
 		fmt.Println("用户注册完成-姓名:", user.Name, ", 体脂:", user.Fat)
 		rank.AcceptRegisterOfUser(user)
+		rank.saveUserInfoToFile(user)
 		registerSucCounter++
 
 		if registerSucCounter == UserCount {
@@ -193,9 +236,9 @@ func main() {
 	}
 	fmt.Println("")
 
-	// 通过bubble排序查询排行榜总信息
+	//通过bubble排序查询排行榜总信息
 	//usersList := rank.getRankListByBubbleSort()
-	// 通过bubble排序查询排行榜总信息
+	// 通过快排查询排行榜总信息
 	usersList := rank.getRankListByQuickSort()
 	// 打印信息
 	fmt.Println("排名\t", "姓名\t", "体脂")
