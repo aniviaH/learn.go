@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
 func main() {
@@ -12,37 +11,41 @@ func main() {
 		conn: db,
 	}
 
-	var nameUser1 = fmt.Sprintf("用户%d", 1)
-	var nameUser2 = fmt.Sprintf("用户%d", 2)
-	var nameUser3 = fmt.Sprintf("用户%d", 3)
+	var id1 int64 = 1
+	var id2 int64 = 2
+	var id3 int64 = 3
+	var nameUser1 = fmt.Sprintf("用户%d", id1)
+	var nameUser2 = fmt.Sprintf("用户%d", id2)
+	var nameUser3 = fmt.Sprintf("用户%d", id3)
+
 	var user1 = &PersonInfo{
-		Id:       1,
-		Name:     nameUser1,
-		Sex:      "男",
-		Tall:     1.75,
-		Weight:   65,
-		Age:      25,
-		Time:     time.Now(),
+		Id:     id1,
+		Name:   nameUser1,
+		Sex:    "男",
+		Tall:   1.75,
+		Weight: 65,
+		Age:    25,
+		//Time:     time.Now().Nanosecond(),
 		IsDelete: 0,
 	}
 	var user2 = &PersonInfo{
-		Id:       2,
-		Name:     nameUser2,
-		Sex:      "女",
-		Tall:     1.65,
-		Weight:   55,
-		Age:      24,
-		Time:     time.Now(),
+		Id:     id2,
+		Name:   nameUser2,
+		Sex:    "女",
+		Tall:   1.65,
+		Weight: 55,
+		Age:    24,
+		//Time:     time.Now().Nanosecond(),
 		IsDelete: 0,
 	}
 	var user3 = &PersonInfo{
-		Id:       3,
-		Name:     nameUser3,
-		Sex:      "男",
-		Tall:     1.75,
-		Weight:   70,
-		Age:      28,
-		Time:     time.Now(),
+		Id:     id3,
+		Name:   nameUser3,
+		Sex:    "男",
+		Tall:   1.75,
+		Weight: 70,
+		Age:    28,
+		//Time:     time.Now().Nanosecond(),
 		IsDelete: 0,
 	}
 
@@ -60,7 +63,7 @@ func main() {
 
 	// 更新用户3的状态：年龄 身高 体重
 	var user3New = &PersonInfo{
-		Id:     3,
+		Id:     id3,
 		Name:   nameUser3,
 		Age:    29,
 		Tall:   1.76,
@@ -72,7 +75,7 @@ func main() {
 	circle.listByName(nameUser3)
 
 	// 删除用户2状态
-	var idToDelete int64 = 2
+	var idToDelete int64 = id2
 	circle.delete(idToDelete)
 	// 查询用户3状态
 	circle.listByName(nameUser2)

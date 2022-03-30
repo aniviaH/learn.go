@@ -8,7 +8,8 @@ import (
 )
 
 func ConnectDatabase() *gorm.DB {
-	conn, err := gorm.Open(mysql.Open("root:learngo@tcp(127.0.0.1:3306)/learngo"))
+	//conn, err := gorm.Open(mysql.Open("root:learngo@tcp(127.0.0.1:3306)/learngo"))
+	conn, err := gorm.Open(mysql.Open("user-learngo:Learngo@123***@tcp(127.0.0.1:3306)/learngo"))
 	if err != nil {
 		log.Fatalln("数据库连接失败：", err)
 	}

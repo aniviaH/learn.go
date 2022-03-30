@@ -1,0 +1,14 @@
+CREATE TABLE `learngo`.`circle` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `sex` VARCHAR(45) NULL,
+  `tall` FLOAT NULL,
+  `weight` FLOAT NULL,
+  `age` INT NULL,
+  `time` DATETIME NULL,
+  `is_delete` INT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '朋友圈';
