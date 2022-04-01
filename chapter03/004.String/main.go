@@ -7,7 +7,25 @@ import (
 )
 
 func main() {
-	//var a rune = 'a'
+	{
+		var a rune = 'a'
+		var b rune = '\x61'
+		var c rune = '\141'
+		var d rune = '\u1234'
+		var e rune = '\U00012345'
+		//var f rune = '\Ufffffffa'
+		var s []rune = []rune{a, b, c, d, e}
+		fmt.Printf("%+v\n", s)
+
+		//var s []rune = []rune{a, b, c, d, e}
+		//fmt.Printf("%+v\n", s) // [97 97 97 4660 74565]
+		fmt.Println(string(s))
+
+		name := "abc"
+		fmt.Printf("%+v\n", []rune(name)) // [112 105 114 108 111]
+		fmt.Printf("%+v\n", string([]rune(name)))
+		fmt.Printf("%+v\n", string(name))
+	}
 
 	// rune 解释型字符串
 	s := "I am an interpreted string literal" +
